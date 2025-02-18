@@ -3,3 +3,8 @@
 body{
     @apply bg-slate-900
 }
+
+.thin-scrollbar{
+    scrollbar-width: thin;
+    scrollbar-color: #888 #e1c7c7;
+}

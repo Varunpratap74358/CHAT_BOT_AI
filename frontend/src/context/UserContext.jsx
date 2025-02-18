@@ -28,7 +28,7 @@ export const UserProvider = ({ children }) => {
   const [isAuth, setIsAuth] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  const verifyUser = async (otp, navigate) => {
+  const verifyUser = async (otp, navigate,fetchChat) => {
     const verifyToken = localStorage.getItem("verifyToken");
     setBtnLoading(true);
     if (!verifyToken) {
@@ -43,6 +43,7 @@ export const UserProvider = ({ children }) => {
       toast.success(data.message);
       localStorage.clear();
       localStorage.setItem("token", data?.token);
+      fetchChat()
       navigate("/");
       setIsAuth(true);
       setUser(data.user);
@@ -70,6 +71,13 @@ export const UserProvider = ({ children }) => {
     }
   };
 
+  const logoutFunction = async(navigate)=>{
+    localStorage.clear()
+    setIsAuth(false)
+    setUser([])
+    toast.success("Logout successfully")
+    navigate('/login')
+  }
   useEffect(() => {
     fetchUser();
   }, []);
@@ -84,6 +92,7 @@ export const UserProvider = ({ children }) => {
         setIsAuth,
         user,
         loading,
+        logoutFunction
       }}
     >
       {children}

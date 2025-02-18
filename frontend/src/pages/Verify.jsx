@@ -3,16 +3,18 @@ import toast from "react-hot-toast";
 import { UserData } from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import { LoadingSpinner } from "../components/Loading";
+import { ChatData } from "../context/ChatContext";
 
 const Verify = () => {
   const [otp, setOtp] = useState("");
-  const {btnLoading,verifyUser,isAuth} = UserData()
+  const {btnLoading,verifyUser} = UserData()
+  const {fetchChat} = ChatData()
   const naviget = useNavigate()
 
   const submitOtpForm = (e) => {
     e.preventDefault();
     try {
-      verifyUser(Number(otp),naviget);
+      verifyUser(Number(otp),naviget,fetchChat);
     } catch (error) {
       toast.error("Somting went wrong");
     }
